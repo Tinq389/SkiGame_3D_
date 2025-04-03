@@ -1,49 +1,48 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RaceTimer : MonoBehaviour
 {
-    [SerializeField] private float penaltyTime = 1;
-    private bool timerRunning = false;
+    bool timerRunning = false;
     private float raceTime = 0;
-    
-
+    [SerializeField] private Leaderboard leaderboard;
+    private void OnEnable()
+    {
+        GameEvents.RaceStart += StartRaceTimer;
+        GameEvents.RaceFinish += StopRaceTimer;
+        GameEvents.RacePenalty += RacePenalty;
+    }
+    private void OnDisable()
+    {
+        GameEvents.RaceStart -= StartRaceTimer;
+        GameEvents.RaceFinish -= StopRaceTimer;
+        GameEvents.RacePenalty -= RacePenalty;
+    }
     private void Update()
     {
         if (timerRunning)
             raceTime += Time.deltaTime;
     }
-
-    private void OnEnable()
+    private void RacePenalty()
     {
-        PlayerEvents.raceStart += StartRace;
-        PlayerEvents.raceEnd += FinishRace;
-        PlayerEvents.racePenalty += Penalty;
+        raceTime += 1;
+        Debug.Log("penalty recieved");
     }
 
-    private void OnDisable()
-    {
-        PlayerEvents.raceStart  -= StartRace;
-        PlayerEvents.raceEnd -= FinishRace;
-        PlayerEvents.racePenalty -= Penalty;
-    }
 
-    private void Penalty()
+    private void StartRaceTimer()
     {
-        raceTime += penaltyTime;
-        Debug.Log("Penalty recieved!");
-    }
-    private void StartRace()
-    {
+        raceTime = 0;
         timerRunning = true;
-        Debug.Log("Race started!");
+        Debug.Log("race started");
     }
-    
-    private void FinishRace()
+    private void StopRaceTimer()
     {
         timerRunning = false;
-        Debug.Log("Race ended!");
+        leaderboard.AddTime(raceTime);
+        GameData.Instance.racesCompleted++;
+        Debug.Log("Races completed : " + GameData.Instance.racesCompleted);
+        Debug.Log("Race finished! Race time: "+ raceTime);
     }
 }

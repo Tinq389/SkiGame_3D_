@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SkiGame 1.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: Assets/Scenes/SkiGame 4.unity
+    guid: ff79888196d3cb949b9b0555da8df224
+  - enabled: 1
+    path: Assets/Scenes/SkiGame 2.unity
+    guid: 5ff265e9b9fe97a4eb590f42649a93b5
   m_configObjects: {}
