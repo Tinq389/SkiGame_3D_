@@ -6,7 +6,6 @@ using UnityEngine;
 public class Leaderboard : MonoBehaviour
 {
     [SerializeField] private List<float> bestTimes = new();
-
     private void Awake()
     {
         bestTimes.Clear();
@@ -19,14 +18,12 @@ public class Leaderboard : MonoBehaviour
             }
         }
     }
-
     public void AddTime(float time)
     {
         bestTimes.Add(time);
         bestTimes.Sort();
         SaveData();
     }
-
     private void SaveData()
     {
         for (int i = 0; i < 5; i++)

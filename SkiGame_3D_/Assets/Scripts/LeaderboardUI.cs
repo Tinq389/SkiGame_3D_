@@ -1,35 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; // Needed for TextMeshProUGUI
+using TMPro;
 
 public class LeaderboardUI : MonoBehaviour
 {
     [SerializeField] private Leaderboard leaderboard;
     [SerializeField] private GameObject leaderboardContainer;
     [SerializeField] private List<TextMeshProUGUI> leaderboardEntries;
-
     public void UpdateLeaderboard()
     {
         leaderboardContainer.gameObject.SetActive(true);
 
         List<float> bestTimes = leaderboard.GetBestTimes();
-        Debug.Log("Best times count: " + bestTimes.Count); // Debugging help
+        Debug.Log("Best times count: " + bestTimes.Count); 
 
         for (int i = 0; i < leaderboardEntries.Count; i++)
         {
             if (i < bestTimes.Count)
             {
-                Debug.Log($"Setting entry {i}: {bestTimes[i]}"); // Debugging help
+                Debug.Log($"Setting entry {i}: {bestTimes[i]}");
                 leaderboardEntries[i].text = $"{i + 1}. {FormatTime(bestTimes[i])}";
             }
             else
             {
-                leaderboardEntries[i].text = $"{i + 1}. ---"; // No time recorded yet
+                leaderboardEntries[i].text = $"{i + 1}. ---";
             }
         }
     }
-
     private string FormatTime(float time)
     {
         int minutes = Mathf.FloorToInt(time / 60f);
