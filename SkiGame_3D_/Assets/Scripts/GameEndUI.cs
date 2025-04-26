@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class GameEndUI : MonoBehaviour
 {
-
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private Image crossfade;
     [SerializeField] private int nextLevelIndex = 1;
+    [SerializeField] private LeaderboardUI leaderboardUI;
 
     public void Start()
     {
@@ -33,6 +33,15 @@ public class GameEndUI : MonoBehaviour
     private void EnableGameOver()
     {
         gameOverMenu.SetActive(true);
+
+        if (leaderboardUI != null)
+        {
+            leaderboardUI.UpdateLeaderboard();
+        }
+        else
+        {
+            Debug.LogWarning("LeaderboardUI is not assigned!");
+        }
     }
 
     public void QuitButton()
@@ -56,7 +65,7 @@ public class GameEndUI : MonoBehaviour
     {
         StartCoroutine(NextLevelCoroutine());
     }
-    
+
     private IEnumerator NextLevelCoroutine()
     {
         crossfade.CrossFadeAlpha(1, 1f, true);
@@ -68,7 +77,7 @@ public class GameEndUI : MonoBehaviour
     {
         StartCoroutine(QuitCoroutine());
     }
-    
+
     private IEnumerator QuitCoroutine()
     {
         crossfade.CrossFadeAlpha(1, 1f, true);

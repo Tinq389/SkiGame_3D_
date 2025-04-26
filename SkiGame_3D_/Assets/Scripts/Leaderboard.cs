@@ -12,7 +12,11 @@ public class Leaderboard : MonoBehaviour
         bestTimes.Clear();
         for (int i = 0; i < 5; i++)
         {
-            bestTimes.Add(PlayerPrefs.GetFloat("time"+i,9999999));
+            float savedTime = PlayerPrefs.GetFloat("time" + i, 9999999);
+            if (savedTime < 9999999)
+            {
+                bestTimes.Add(savedTime);
+            }
         }
     }
 
@@ -31,5 +35,9 @@ public class Leaderboard : MonoBehaviour
                 PlayerPrefs.SetFloat("time"+i, bestTimes[i]);
         }
         PlayerPrefs.Save();
+    }
+    public List<float> GetBestTimes()
+    {
+        return new List<float>(bestTimes);
     }
 }
